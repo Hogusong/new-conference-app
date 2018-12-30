@@ -1,0 +1,7 @@
+{
+  "name": "ys-conference-app",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
