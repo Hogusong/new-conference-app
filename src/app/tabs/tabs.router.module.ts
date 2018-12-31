@@ -4,53 +4,41 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
-  {
-    path: 'tabs',
-    component: TabsPage,
+  { path: 'tabs', component: TabsPage,
     children: [
-      {
-        path: 'tab1',
+      { path: 'schedule',
         children: [
-          {
-            path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
-          }
+          { path: '', loadChildren: '../pages/schedule/schedule.module#SchedulePageModule' }
         ]
       },
-      {
-        path: 'tab2',
+      { path: 'speakers',
         children: [
-          {
-            path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
-          }
+          { path: '', loadChildren: '../pages/speakers/speakers.module#SpeakersPageModule' }
         ]
       },
-      {
-        path: 'tab3',
+      { path: 'map',
         children: [
-          {
-            path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
-          }
+          { path: '', loadChildren: '../pages/map/map.module#MapPageModule' }
         ]
       },
-      {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
+      { path: 'about',
+        children: [
+          { path: '', loadChildren: '../pages/about/about.module#AboutPageModule' }
+        ]
+      },
+      { path: 'notfound',
+        children: [
+          { path: '', loadChildren: '../pages/notfound/notfound.module#NotfoundPageModule' }
+        ]
+      },
+      { path: '', redirectTo: '/tabs/schedule', pathMatch: 'full' }
     ]
   },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
+  { path: '', redirectTo: '/tabs/schedule', pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsRoutingModule {}
