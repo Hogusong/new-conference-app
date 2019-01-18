@@ -65,7 +65,7 @@
           </ion-list-header>
 
           <ion-menu-toggle auto-hide="false">
-            <ion-item button (click)="navigate('/login')">
+            <ion-item button (click)="login()">
               <ion-icon slot="start" name="log-in"></ion-icon>
               <ion-label>
                 Login
@@ -92,7 +92,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list>
+        <ion-list *ngIf="username !== 'admin'">
           <ion-list-header>
             Tutorial
           </ion-list-header>
@@ -103,6 +103,19 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+
+        <ion-list *ngIf="username === 'admin'">
+            <ion-list-header>
+              Configuration
+            </ion-list-header>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item button (click)="navigate('/setup')">
+                <ion-icon slot="start" name="hammer"></ion-icon>
+                <ion-label>Setup</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+  
       </ion-content>
     </ion-menu>
 
