@@ -34,4 +34,8 @@ export class GeneralService {
   getUser(): Promise<USER> {
     return this.storage.get('user');
   }
+
+  setUser(user: USER): Promise<USER> {
+    return this.storage.set('user', user);
+  }
 }
