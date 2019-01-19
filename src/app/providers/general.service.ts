@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection,
          AngularFirestoreDocument,
          AngularFirestore }   from 'angularfire2/firestore';
+import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,6 +22,7 @@ export class GeneralService {
 
   constructor(private db: AngularFirestore,
               private storage: Storage,
+              public events: Events,
               private userService: UserService) {
     this.tracksCollection = this.db.collection(
       'tracks', ref => ref.orderBy('name', 'asc'));
@@ -68,12 +70,14 @@ export class GeneralService {
 
   login(user: USER): Promise<any> {
     return this.storage.set(this.IS_LOGGED_IN, true)
-      .then(() => this.storage.set('user', user));
+      .then(() => this.storage.set('user', user))
+      .then(() => this.events.publish('user:login'));
   }
 
   logout(): Promise<any> {
     return this.storage.set(this.IS_LOGGED_IN, false)
-      .then(() => this.storage.remove('user'));
+      .then(() => this.storage.remove('user'))
+      .then(() => this.events.publish('user:logout'));
   }
 
   signup(user: USER): Promise<any> {

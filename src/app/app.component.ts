@@ -30,7 +30,10 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getLoginStatus();
+    this.generalService.isLoggedIn().then(res => {
+      this.updateLoggedInStatus(res);
+    })
+    this.listenForLoginEvents();
   }
 
   initializeApp() {
@@ -40,21 +43,20 @@ export class AppComponent implements OnInit{
     });
   }
 
-  getLoginStatus() {
-    this.generalService.isLoggedIn().then((res) => {
-      this.loggedIn = res;
-      if (this.loggedIn) {
-        this.generalService.getUser().then(user => {
-          if (user) {
-            this.username = user.username; 
-            this.router.navigate(['/tabs/schedule']);  
-          } else {
-            this.router.navigate(['/tabs/speakers']);
-          }
-        });
-      } else {
-        this.router.navigate(['/tabs/speakers']);
-      }
+  updateLoggedInStatus(loggedIn: boolean) {
+    this.loggedIn = loggedIn;
+    this.generalService.getUser().then(user => {
+      this.username = user ? user.username : '';
+    });
+  }
+
+  listenForLoginEvents() {
+    this.events.subscribe('user:login', () => {
+      this.updateLoggedInStatus(true);
+    });
+
+    this.events.subscribe('user:logout', () => {
+      this.updateLoggedInStatus(false);
     });
   }
 
