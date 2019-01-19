@@ -36,7 +36,7 @@ All app preview screenshots were taken by running `ionic serve --lab` on a retin
 
 - [Speakers Page](https://github.com/Hogusong/new-conference-app/blob/master/src/app/pages/speakers/speakers.page.html)
 
-  <img src="resources/screenshots/AboutPage.png" alt="Schedule">
+  <img src="resources/screenshots/Speakers - main.png" alt="Speakers">
 
 
 - To see more images of the app, check out the [screenshots directory](https://github.com/Hogusong/new-conference-app/tree/master/resources/screenshots)!
