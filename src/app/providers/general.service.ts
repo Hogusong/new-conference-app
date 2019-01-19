@@ -64,6 +64,15 @@ export class GeneralService {
     });
   }
 
+  getPeriod(): Promise<any> {
+    return this.storage.get('period');
+  }
+
+  // set period = { start: string, end: string }
+  setPeriod(date: any): Promise<any> {
+    return this.storage.set('period', date);
+  }
+
   isLoggedIn(): Promise<any> {
     return this.storage.get(this.IS_LOGGED_IN);
   }
