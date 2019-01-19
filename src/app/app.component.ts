@@ -62,16 +62,6 @@ export class AppComponent implements OnInit{
     this.router.navigate([url]);
   }
 
-  login() {
-    const user = { 
-      username: 'admin', password: '1111', email: 'abc@abc.com',
-      favorites: [],     trackFilter: []
-    }
-    this.generalService.login(user).then(() => {
-      this.getLoginStatus();
-    });
-  }
-
   logout() {
     this.generalService.logout().then(() => {
       this.loggedIn = false;
