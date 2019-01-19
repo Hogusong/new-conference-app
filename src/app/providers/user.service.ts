@@ -77,4 +77,41 @@ export class UserService {
     this.userDoc = this.db.doc(`users/${user.id}`);
     this.userDoc.delete();
   }
+
+  addTrackInUser(name) {
+    const track = { name: name, isChecked: true };
+    this.getUsers().subscribe(users => {
+      users.forEach(user => {
+        const idx = user.trackFilter.findIndex(item => item.name === name);
+        if (idx < 0) {
+          user.trackFilter.push(track);
+          this.updateUser(user);
+        }
+      });
+    });
+  }
+
+  updateTracksInUser(newName: string, oldName: string) {
+    this.getUsers().subscribe(users => {
+      users.forEach(user => {
+        const idx = user.trackFilter.findIndex(track => track.name === oldName);
+        if (idx > -1) {
+          user.trackFilter[idx].name = newName;
+          this.updateUser(user);
+        }
+      });
+    });
+  }
+
+  removeTrackInUser(name) {
+    this.getUsers().subscribe(users => {
+      users.forEach(user => {
+        const idx = user.trackFilter.findIndex(track => track.name === name);
+        if (idx > -1) {
+          user.trackFilter.splice(idx, 1);
+          this.updateUser(user);
+        }
+      });
+    });
+  }
 }
