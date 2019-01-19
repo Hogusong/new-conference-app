@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from 'angularfire2/storage';
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { USER } from '../models';
-import { GeneralService } from './general.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,6 @@ export class UserService {
 
   constructor(private db: AngularFirestore,
               private fireStorage: AngularFireStorage,
-              private genService: GeneralService,
               public storage: Storage) {
     this.usersCollection = this.db.collection(
       'users', ref => ref.orderBy('username', 'asc'));
@@ -70,7 +69,7 @@ export class UserService {
 
     // save user's info to ionic storage.
     user.id = id;
-    this.genService.setUser(user);
+    this.setUser(user);
   }
 
   removeUser(user: USER) {
@@ -113,5 +112,13 @@ export class UserService {
         }
       });
     });
+  }
+
+  setUser(user: USER): Promise<USER> {
+    return this.storage.set('user', user);
+  }
+
+  getUser(): Promise<USER> {
+    return this.storage.get('user');
   }
 }

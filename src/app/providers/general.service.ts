@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection,
          AngularFirestoreDocument,
          AngularFirestore }   from 'angularfire2/firestore';
-import { AngularFireStorage } from 'angularfire2/storage';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,7 +20,6 @@ export class GeneralService {
   trackDoc: AngularFirestoreDocument<TRACK>;
 
   constructor(private db: AngularFirestore,
-              private fireStorage: AngularFireStorage,
               private storage: Storage,
               private userService: UserService) {
     this.tracksCollection = this.db.collection(
@@ -79,7 +77,7 @@ export class GeneralService {
   }
 
   signup(user: USER): Promise<any> {
-    return this.userService.addUser(user).then(() => this.login(user));
+    return this.userService.addUser(user);
   }
 
   getUser(): Promise<USER> {
