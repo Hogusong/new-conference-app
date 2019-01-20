@@ -14,7 +14,7 @@ export interface TRACK {
   name: string;
 }
 
-export interface Speaker {
+export interface  SPEAKER {
   id?: string;
   name: string;
   profilePic?: string;
@@ -28,7 +28,7 @@ export interface Speaker {
   sessions?: { id: string, name: string }[];   // session id & name
 }
 
-export interface Session {
+export interface SESSION {
   id?: string;
   name: string;
   date: string;         // 2018-12-06

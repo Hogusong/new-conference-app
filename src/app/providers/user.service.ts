@@ -16,13 +16,6 @@ export class UserService {
   userDoc: AngularFirestoreDocument<USER>;
   users: Observable<USER[]>;
 
-  // users: USER[] = [
-  //   { id: '0', username: 'Joe', password: '1111', email: 'joe@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '1', username: 'Cassidy', password: '2222', email: 'cassidy@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '2', username: 'Randy', password: '3333', email: 'ran@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '3', username: 'Narae', password: '4444', email: 'narae@gmail.com', favorites: [], trackFilter: [] }
-  // ];
-
   constructor(private db: AngularFirestore,
               private fireStorage: AngularFireStorage,
               public storage: Storage) {
