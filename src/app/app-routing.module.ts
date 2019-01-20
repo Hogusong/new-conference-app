@@ -9,8 +9,8 @@ const routes: Routes = [
   { path: 'suport', loadChildren: './pages/suport/suport.module#SuportPageModule' },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
   { path: 'tutorial', loadChildren: './pages/tutorial/tutorial.module#TutorialPageModule' },
-  // { path: 'setup', loadChildren: './pages/setup/setup.module#SetupPageModule' },
-  { path: '**', redirectTo: '/tabs/notfound' }
+  { path: 'setup', loadChildren: './setup/tabs-setup/tabs-setup.module#TabsSetupPageModule' },
+  { path: '**', redirectTo: '/tabs/notfound' },
 ];
 
 @NgModule({
@@ -18,3 +18,11 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+
+  // { path: 'tabs-setup', loadChildren: './setup/tabs-setup/tabs-setup.module#TabsSetupPageModule' },
+  // { path: 'sessions', loadChildren: './setup/sessions/sessions.module#SessionsPageModule' },
+  // { path: 'set-speakers', loadChildren: './setup/set-speakers/set-speakers.module#SetSpeakersPageModule' },
+  // { path: 'set-map', loadChildren: './setup/set-map/set-map.module#SetMapPageModule' },
+  // { path: 'tracks', loadChildren: './setup/tracks/tracks.module#TracksPageModule' },
+  // { path: 'partofday', loadChildren: './setup/partofday/partofday.module#PartofdayPageModule' },
+  // { path: 'support', loadChildren: './setup/support/support.module#SupportPageModule' }
