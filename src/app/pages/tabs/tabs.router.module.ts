@@ -8,27 +8,27 @@ const routes: Routes = [
     children: [
       { path: 'schedule',
         children: [
-          { path: '', loadChildren: '../pages/schedule/schedule.module#SchedulePageModule' }
+          { path: '', loadChildren: '../schedule/schedule.module#SchedulePageModule' }
         ]
       },
       { path: 'speakers',
         children: [
-          { path: '', loadChildren: '../pages/speakers/speakers.module#SpeakersPageModule' }
+          { path: '', loadChildren: '../speakers/speakers.module#SpeakersPageModule' }
         ]
       },
       { path: 'map',
         children: [
-          { path: '', loadChildren: '../pages/map/map.module#MapPageModule' }
+          { path: '', loadChildren: '../map/map.module#MapPageModule' }
         ]
       },
       { path: 'about',
         children: [
-          { path: '', loadChildren: '../pages/about/about.module#AboutPageModule' }
+          { path: '', loadChildren: '../about/about.module#AboutPageModule' }
         ]
       },
       { path: 'notfound',
         children: [
-          { path: '', loadChildren: '../pages/notfound/notfound.module#NotfoundPageModule' }
+          { path: '', loadChildren: '../notfound/notfound.module#NotfoundPageModule' }
         ]
       },
       { path: '', redirectTo: '/tabs/schedule', pathMatch: 'full' }

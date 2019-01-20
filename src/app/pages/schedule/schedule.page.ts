@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
 import { GeneralService } from 'src/app/providers/general.service';
