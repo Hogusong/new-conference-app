@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+
 import { GeneralService } from 'src/app/providers/general.service';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-schedule',
@@ -16,10 +16,8 @@ export class SchedulePage implements OnInit{
   startDate: string;
   endDate: string;
 
-  constructor(private storage: Storage,
-              private loadingCtrl: LoadingController,
-              private genService: GeneralService,
-              private router: Router) { }
+  constructor(private loadingCtrl: LoadingController,
+              private genService: GeneralService) { }
 
   ngOnInit() {
     this.genService.isLoggedIn().then(res => {
