@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Speakers</ion-title>
     <ion-buttons slot="end">
-      <ion-item color="primary" routerLink="'setup/tabs/set-speakers'">Add New</ion-item>
+      <ion-item color="primary" (click)="navigate('New')">Add New</ion-item>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
@@ -16,7 +16,7 @@
 <ion-content>
   <ion-item-group *ngFor="let speaker of speakers">
     <ion-item [hidden]="!speaker.name.toLowerCase().includes(queryText)"
-              routerLink="'setup/tabs/set-speakers'">
+              (click)="navigate(speaker.id)">
       <ion-avatar slot="start">
         <img [src]="speaker.profilePic" alt="Speaker profile pic">
       </ion-avatar>

@@ -57,4 +57,8 @@ export class SetSpeakersPage implements OnInit {
     });
     await alert.present();
   }
+
+  navigate(mode: string) {
+    this.router.navigate(['/setup/tabs/set-speakers/edit', mode]);
+  }
 }

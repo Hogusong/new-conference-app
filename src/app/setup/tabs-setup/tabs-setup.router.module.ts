@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'set-speakers',
         children: [
           { path: '', loadChildren: '../set-speakers/set-speakers.module#SetSpeakersPageModule' },
+          { path: 'edit/:mode', loadChildren: '../set-speakers/speaker-edit/speaker-edit.module#SpeakerEditPageModule' },
           // { path: 'edit/:mode', loadChildren: '' }
         ]
       },
