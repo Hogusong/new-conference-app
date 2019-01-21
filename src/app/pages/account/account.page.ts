@@ -47,7 +47,7 @@ export class AccountPage implements OnInit {
                 this.funService.onError(this.header, data.username + ' was used already. Try another.');
               } else {
                 // update after getter user's avatar as string.
-                this.userService.getUser().then(user => {
+                this.genService.getUser().then(user => {
                   user.username = data.username;
                   this.updateUserData(user);
                 });
@@ -72,6 +72,92 @@ export class AccountPage implements OnInit {
     await changeForm.present();
   }
 
+  async changeEmail() {
+    this.succeed = false;
+    const changeForm = await this.alertCtrl.create({
+      header: 'Change Email',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Ok',
+          handler: (data: any) => {
+            if (this.isTheValueUsed(data.email)) {
+              this.funService.onError(this.header, data.email + ' was used already. Try another.');
+            } else {
+              // update after getter user's avatar as string.
+              this.genService.getUser().then(user => {
+                user.email = data.email;
+                this.updateUserData(user);
+                this.user.email = data.email;
+                this.succeed = true;
+                this.jobDescription = 'Email has been changed.';
+              });
+            }
+          }
+        }
+      ],
+      inputs: [
+        {
+          type: 'email',
+          name: 'email',
+          value: this.user.email,
+          placeholder: 'new email'
+        }
+      ],
+      backdropDismiss: false
+    });
+    await changeForm.present();
+  }
+
+  async changePassword() {
+    this.succeed = false;
+    const changeForm = await this.alertCtrl.create({
+      header: 'Change Password',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Ok',
+          handler: (data: any) => {
+            if (this.user.password !== data.currentPW) {
+              this.funService.onError(this.header, 'Current password does not match your password.');
+            } else if (data.newPW.length < 4) {
+              this.funService.onError(this.header, 'Password should be more than 3 characters.');
+            } else if (data.newPW !== data.confirmPW) {
+              this.funService.onError(this.header, 'New password does not match Confirm password.');
+            } else {
+              // update after getter user's avatar as string.
+              this.genService.getUser().then(user => {
+                user.password = data.newPW;
+                this.updateUserData(user);
+                this.user.password = data.newPW;
+                this.succeed = true;
+                this.jobDescription = 'Password has been changed.';
+              });
+            }
+          }
+        }
+      ],
+      inputs: [
+        {
+          type: 'password',
+          name: 'newPW',
+          placeholder: 'new password'
+        },
+        {
+          type: 'password',
+          name: 'confirmPW',
+          placeholder: 'confirm password'
+        },
+        {
+          type: 'password',
+          name: 'currentPW',
+          placeholder: 'current password'
+        }
+      ],
+      backdropDismiss: false
+    });
+    await changeForm.present();
+  }
 
   isTheValueUsed(value: string) {
     if (value.indexOf('@') < 0) {
