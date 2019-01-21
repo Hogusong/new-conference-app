@@ -20,13 +20,12 @@ const routes: Routes = [
       { path: 'tracks',
         children: [
           { path: '', loadChildren: '../tracks/tracks.module#TracksPageModule' },
-          // { path: 'edit/:mode', loadChildren: '' }
         ]
       },
       { path: 'partofday',
         children: [
           { path: '', loadChildren: '../partofday/partofday.module#PartofdayPageModule' },
-          // { path: 'edit/:mode', loadChildren: '' }
+          { path: 'new', loadChildren: '../partofday/new-pod/new-pod.module#NewPodPageModule' }
         ]
       },
       { path: 'set-map',

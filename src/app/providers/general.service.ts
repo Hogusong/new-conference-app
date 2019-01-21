@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { USER, TRACK } from '../models';
+import { USER, TRACK, PARTOFDAY } from '../models';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -20,12 +20,46 @@ export class GeneralService {
   tracksCollection: AngularFirestoreCollection<TRACK>;
   trackDoc: AngularFirestoreDocument<TRACK>;
 
+  partsOfDayCollection: AngularFirestoreCollection<PARTOFDAY>;
+  partOfDayDoc: AngularFirestoreDocument<PARTOFDAY>;
+
   constructor(private db: AngularFirestore,
               private storage: Storage,
               public events: Events,
               private userService: UserService) {
     this.tracksCollection = this.db.collection(
       'tracks', ref => ref.orderBy('name', 'asc'));
+    this.partsOfDayCollection = this.db.collection(
+      'partOfDay', ref => ref.orderBy('indexKey', 'asc'));
+  }
+
+  getPartsOfDay(): Observable<PARTOFDAY[]> {
+    return this.partsOfDayCollection.snapshotChanges()
+      .pipe(map(response => {
+        return response.map(action => {
+          const data = action.payload.doc.data() as PARTOFDAY;
+          data.id = action.payload.doc.id;
+          return data;
+        });
+      }));
+  }
+
+  updatePartOfDay(pod: PARTOFDAY) {
+    const id = pod.id;
+    delete(pod.id);
+    this.partOfDayDoc = this.db.doc(`partsOfDay/${id}`);
+    this.partOfDayDoc.update(pod);
+  }
+
+  changePartsOfDay(PODs: PARTOFDAY[], newPODs: PARTOFDAY[]) {
+    PODs.forEach(pod => {
+      const podDoc = this.db.doc(`partsOfDay/${pod.id}`);
+      podDoc.delete();
+    });
+
+    newPODs.forEach(pod => {
+      this.partsOfDayCollection.add(pod);
+    });
   }
 
   getTracks(): Observable<TRACK[]> {

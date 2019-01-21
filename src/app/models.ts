@@ -40,3 +40,11 @@ export interface SESSION {
   tracks: string[];     //  name of track
   hide?: boolean;
 }
+
+export interface PARTOFDAY {
+  id?: string;
+  indexKey?: number;
+  name: string;    // morning, afternoon, evening, overnight
+  timeFrom: string;
+  timeTo: string;
+}
