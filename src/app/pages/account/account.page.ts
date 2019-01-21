@@ -175,6 +175,23 @@ export class AccountPage implements OnInit {
     });
   }
 
+  updatePicture(path: string) {
+    const oldUrl = this.user.avatar;
+    const id = this.user.id;
+
+    this.user.avatar = path;
+    this.updateUserData(this.user);
+
+    this.uploadImage = false;
+    this.user = null;
+    this.userService.getUserById(id).then(data => { this.user = data; });
+    this.userService.deleteUrl(oldUrl);
+  }
+
+  onExit() {
+    this.uploadImage = false;
+  }
+
   logout() {
     this.genService.logout();
     this.router.navigateByUrl('/login');

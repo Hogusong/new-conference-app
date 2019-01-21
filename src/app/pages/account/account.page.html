@@ -23,8 +23,10 @@
     <p *ngIf="succeed">{{ jobDescription }}</p>
   </div>
 
-  <div *ngIf="uploadImage">
-    <h3>Uploading Image of User</h3>
-    <ion-button (click)="uploadImage=false">Go Back</ion-button>
-  </div>
+  <upload-image *ngIf="user && uploadImage"
+        [username]="user.username"
+        (updateUser)="updatePicture($event)"
+        (exit)="onExit()">
+  </upload-image>
+
 </ion-content>

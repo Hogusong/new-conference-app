@@ -67,11 +67,9 @@ export class UserService {
     this.userDoc.delete();
   }
 
-  setUser(user: USER): Promise<USER> {
-    return this.storage.set('user', user);
-  }
-
-  getUser(): Promise<USER> {
-    return this.storage.get('user');
+  deleteUrl(oldUrl) {
+    if (oldUrl) {
+      this.fireStorage.storage.refFromURL(oldUrl).delete();
+    }
   }
 }
