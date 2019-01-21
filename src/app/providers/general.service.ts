@@ -40,28 +40,20 @@ export class GeneralService {
   }
 
   addTrack(track: TRACK) {
-    this.tracksCollection.add(track).then(res => {
-      this.userService.addTrackInUser(track.name);
-    });
+    this.tracksCollection.add(track);
   }
 
-  updateTrack(track: TRACK, newName: string) {
-    const oldName = track.name;
-    track.name = newName;
+  updateTrack(track: TRACK) {
     const id = track.id;
     delete(track.id);
     this.trackDoc = this.db.doc(`tracks/${id}`);
-    this.trackDoc.update(track).then(() => {
-      this.userService.updateTracksInUser(newName, oldName);
-    });
+    this.trackDoc.update(track);
+    track.id = id;
   }
 
   removeTrack(track: TRACK) {
-    const id = track.id;
-    this.trackDoc = this.db.doc(`tracks/${id}`);
-    this.trackDoc.delete().then(() => {
-      this.userService.removeTrackInUser(track.name);
-    });
+    this.trackDoc = this.db.doc(`tracks/${track.id}`);
+    this.trackDoc.delete();
   }
 
   getPeriod(): Promise<any> {
