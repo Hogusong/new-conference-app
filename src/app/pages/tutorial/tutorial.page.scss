@@ -1,3 +1,9 @@
+ion-toolbar {
+  // TODO test transparent and fullscreen
+  --background: transparent;
+  --border-color: transparent;
+}
+
 .swiper-slide {
   display: block;
 }
@@ -12,6 +18,32 @@
   margin: 36px 0;
 }
 
+.btn-right {
+  float: right;
+  margin-top: 20px;
+}
+
+.btn-left {
+  margin-top: 50px;
+}
+
+.btn-both {
+  display: inline;
+}
+
+.arrow-forward {
+  float: right;
+  width: 30px;
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+.arrow-back {
+  float: left;
+  margin-left: 20px;
+  font-size: 30px;
+}
+
 b {
   font-weight: 500;
 }
@@ -20,7 +52,7 @@ p {
   padding: 0 40px;
   font-size: 14px;
   line-height: 1.5;
-  color: #60646B;
+  color: #60646b;
 
   b {
     color: #000000;

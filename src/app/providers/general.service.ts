@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { USER, TRACK } from '../models';
+import { USER, TRACK, PARTOFDAY } from '../models';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -20,12 +20,46 @@ export class GeneralService {
   tracksCollection: AngularFirestoreCollection<TRACK>;
   trackDoc: AngularFirestoreDocument<TRACK>;
 
+  partsOfDayCollection: AngularFirestoreCollection<PARTOFDAY>;
+  partOfDayDoc: AngularFirestoreDocument<PARTOFDAY>;
+
   constructor(private db: AngularFirestore,
               private storage: Storage,
               public events: Events,
               private userService: UserService) {
     this.tracksCollection = this.db.collection(
       'tracks', ref => ref.orderBy('name', 'asc'));
+    this.partsOfDayCollection = this.db.collection(
+      'partOfDay', ref => ref.orderBy('indexKey', 'asc'));
+  }
+
+  getPartsOfDay(): Observable<PARTOFDAY[]> {
+    return this.partsOfDayCollection.snapshotChanges()
+      .pipe(map(response => {
+        return response.map(action => {
+          const data = action.payload.doc.data() as PARTOFDAY;
+          data.id = action.payload.doc.id;
+          return data;
+        });
+      }));
+  }
+
+  updatePartOfDay(pod: PARTOFDAY) {
+    const id = pod.id;
+    delete(pod.id);
+    this.partOfDayDoc = this.db.doc(`partsOfDay/${id}`);
+    this.partOfDayDoc.update(pod);
+  }
+
+  changePartsOfDay(PODs: PARTOFDAY[], newPODs: PARTOFDAY[]) {
+    PODs.forEach(pod => {
+      const podDoc = this.db.doc(`partsOfDay/${pod.id}`);
+      podDoc.delete();
+    });
+
+    newPODs.forEach(pod => {
+      this.partsOfDayCollection.add(pod);
+    });
   }
 
   getTracks(): Observable<TRACK[]> {
@@ -40,28 +74,29 @@ export class GeneralService {
   }
 
   addTrack(track: TRACK) {
-    this.tracksCollection.add(track).then(res => {
-      this.userService.addTrackInUser(track.name);
-    });
+    this.tracksCollection.add(track);
   }
 
-  updateTrack(track: TRACK, newName: string) {
-    const oldName = track.name;
-    track.name = newName;
+  updateTrack(track: TRACK) {
     const id = track.id;
     delete(track.id);
     this.trackDoc = this.db.doc(`tracks/${id}`);
-    this.trackDoc.update(track).then(() => {
-      this.userService.updateTracksInUser(newName, oldName);
-    });
+    this.trackDoc.update(track);
+    track.id = id;
   }
 
   removeTrack(track: TRACK) {
-    const id = track.id;
-    this.trackDoc = this.db.doc(`tracks/${id}`);
-    this.trackDoc.delete().then(() => {
-      this.userService.removeTrackInUser(track.name);
-    });
+    this.trackDoc = this.db.doc(`tracks/${track.id}`);
+    this.trackDoc.delete();
+  }
+
+  getPeriod(): Promise<any> {
+    return this.storage.get('period');
+  }
+
+  // set period = { start: string, end: string }
+  setPeriod(date: any): Promise<any> {
+    return this.storage.set('period', date);
   }
 
   isLoggedIn(): Promise<any> {

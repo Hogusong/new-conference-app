@@ -14,14 +14,7 @@ export class UserService {
 
   usersCollection: AngularFirestoreCollection<USER>;
   userDoc: AngularFirestoreDocument<USER>;
-  users: Observable<USER[]>;
-
-  // users: USER[] = [
-  //   { id: '0', username: 'Joe', password: '1111', email: 'joe@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '1', username: 'Cassidy', password: '2222', email: 'cassidy@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '2', username: 'Randy', password: '3333', email: 'ran@gmail.com', favorites: [], trackFilter: [] },
-  //   { id: '3', username: 'Narae', password: '4444', email: 'narae@gmail.com', favorites: [], trackFilter: [] }
-  // ];
+  users: USER[];
 
   constructor(private db: AngularFirestore,
               private fireStorage: AngularFireStorage,
@@ -65,11 +58,8 @@ export class UserService {
     const id = user.id;
     delete(user.id);
     this.userDoc = this.db.doc(`users/${id}`);
-    this.userDoc.update(user);
-
-    // save user's info to ionic storage.
+    this.userDoc.update(user)
     user.id = id;
-    this.setUser(user);
   }
 
   removeUser(user: USER) {
@@ -77,48 +67,9 @@ export class UserService {
     this.userDoc.delete();
   }
 
-  addTrackInUser(name) {
-    const track = { name: name, isChecked: true };
-    this.getUsers().subscribe(users => {
-      users.forEach(user => {
-        const idx = user.trackFilter.findIndex(item => item.name === name);
-        if (idx < 0) {
-          user.trackFilter.push(track);
-          this.updateUser(user);
-        }
-      });
-    });
-  }
-
-  updateTracksInUser(newName: string, oldName: string) {
-    this.getUsers().subscribe(users => {
-      users.forEach(user => {
-        const idx = user.trackFilter.findIndex(track => track.name === oldName);
-        if (idx > -1) {
-          user.trackFilter[idx].name = newName;
-          this.updateUser(user);
-        }
-      });
-    });
-  }
-
-  removeTrackInUser(name) {
-    this.getUsers().subscribe(users => {
-      users.forEach(user => {
-        const idx = user.trackFilter.findIndex(track => track.name === name);
-        if (idx > -1) {
-          user.trackFilter.splice(idx, 1);
-          this.updateUser(user);
-        }
-      });
-    });
-  }
-
-  setUser(user: USER): Promise<USER> {
-    return this.storage.set('user', user);
-  }
-
-  getUser(): Promise<USER> {
-    return this.storage.get('user');
+  deleteUrl(oldUrl) {
+    if (oldUrl) {
+      this.fireStorage.storage.refFromURL(oldUrl).delete();
+    }
   }
 }
