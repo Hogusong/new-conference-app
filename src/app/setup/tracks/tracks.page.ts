@@ -83,7 +83,9 @@ export class TracksPage implements OnInit {
           text: 'Ok',
           handler: (data: any) => {
             data.newName = data.newName.trim();
-            if (this.isTheValueUsed(data.newName)) {
+            if (data.newName.length < 3) {
+              this.funService.onError(`Track's Info.`, data.newName + ' should be more than 2 letters. Try another.');
+            } else if (this.isTheValueUsed(data.newName)) {
               this.funService.onError(`Track's Info.`, data.newName + ' was used already. Try another.');
             } else {
               const oldName = track.name;
@@ -104,6 +106,7 @@ export class TracksPage implements OnInit {
         {
           type: 'text',
           name: 'newName',
+          value: track.name,
           placeholder: 'new name here'
         }
       ],
