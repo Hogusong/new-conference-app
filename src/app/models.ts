@@ -48,3 +48,11 @@ export interface PARTOFDAY {
   timeFrom: string;
   timeTo: string;
 }
+
+export interface MAP {
+  id?: string;
+  name: string;
+  lat: number;
+  lng: number;
+  center?: boolean;
+}
