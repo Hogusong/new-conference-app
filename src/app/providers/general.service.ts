@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { USER, TRACK, PARTOFDAY } from '../models';
+import { USER, TRACK, PARTOFDAY, MAP } from '../models';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -16,6 +16,9 @@ import { UserService } from './user.service';
 export class GeneralService {
 
   IS_LOGGED_IN = 'is_logged_in'
+
+  mapsCollection: AngularFirestoreCollection<MAP>;
+  maps: Observable<MAP[]>;
 
   tracksCollection: AngularFirestoreCollection<TRACK>;
   trackDoc: AngularFirestoreDocument<TRACK>;
@@ -31,6 +34,8 @@ export class GeneralService {
       'tracks', ref => ref.orderBy('name', 'asc'));
     this.partsOfDayCollection = this.db.collection(
       'partOfDay', ref => ref.orderBy('indexKey', 'asc'));
+    this.mapsCollection = this.db.collection(
+      'maps', ref => ref.orderBy('name', 'asc'));
   }
 
   getPartsOfDay(): Observable<PARTOFDAY[]> {
@@ -125,5 +130,16 @@ export class GeneralService {
 
   setUser(user: USER): Promise<USER> {
     return this.storage.set('user', user);
+  }
+
+  getMap() {
+    this.maps = this.mapsCollection.snapshotChanges()
+      .pipe(map(response => {
+        return response.map(action => {
+          const data = action.payload.doc.data() as MAP;
+          return data;
+        });
+      }));
+      return this.maps ;
   }
 }
