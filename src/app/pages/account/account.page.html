@@ -24,8 +24,8 @@
   </div>
 
   <upload-image *ngIf="user && uploadImage"
-        [username]="user.username"
-        (updateUser)="updatePicture($event)"
+        [name]="user.username"
+        (updateImage)="updatePicture($event)"
         (exit)="onExit()">
   </upload-image>
 
