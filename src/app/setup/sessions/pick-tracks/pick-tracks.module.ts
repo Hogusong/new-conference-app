@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SessionEditPage } from './session-edit.page';
-import { PickSpeakersPage } from '../pick-speakers/pick-speakers.page';
-import { PickTracksPage } from '../pick-tracks/pick-tracks.page';
+import { PickTracksPage } from './pick-tracks.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SessionEditPage
+    component: PickTracksPage
   }
 ];
 
@@ -23,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SessionEditPage, PickSpeakersPage, PickTracksPage],
-  entryComponents: [PickSpeakersPage, PickTracksPage]
+  declarations: [PickTracksPage]
 })
-export class SessionEditPageModule {}
+export class PickTracksPageModule {}
