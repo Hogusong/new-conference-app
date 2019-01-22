@@ -11,9 +11,9 @@ import { tap } from 'rxjs/operators';
 })
 export class UploadImagePage {
 
-  @Input() username: string;
+  @Input() name: string;
   @Output() exit = new EventEmitter();
-  @Output() updateUser = new EventEmitter<string>();
+  @Output() updateImage = new EventEmitter<string>();
 
   // Main task
   task: AngularFireUploadTask;
@@ -59,7 +59,7 @@ export class UploadImagePage {
     this.snapshot   = this.task.snapshotChanges().pipe(
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
-          this.updateUser.emit(path);
+          this.updateImage.emit(path);
         }
       })
     );

@@ -7,6 +7,8 @@ import { SessionService } from 'src/app/providers/session.service';
 import { SpeakerService } from 'src/app/providers/speaker.service';
 import { GeneralService } from 'src/app/providers/general.service';
 import { FunctionService } from 'src/app/providers/function.service';
+import { PickSpeakersPage } from '../pick-speakers/pick-speakers.page';
+import { PickTracksPage } from '../pick-tracks/pick-tracks.page';
 
 @Component({
   selector: 'app-session-edit',
@@ -87,7 +89,16 @@ export class SessionEditPage implements OnInit {
   }
 
   async selectSpeakers() {
-    console.log('select speakers');
+    const modal = await this.modalCtrl.create({
+      component: PickSpeakersPage,
+      componentProps: { speakers: this.speakers, ids: this.session.speakerIDs }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.session.speakerIDs = data;
+    }
   }
 
   onRemoveTrack(s_name) {
@@ -98,7 +109,16 @@ export class SessionEditPage implements OnInit {
   }
 
   async selectTracks() {
-    console.log('select tracks');
+    const modal = await this.modalCtrl.create({
+      component: PickTracksPage,
+      componentProps: { tracks: this.tracks, names: this.session.tracks }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.session.tracks = data;
+    }
   }
 
   changeTimeEnd(value) {
@@ -130,7 +150,7 @@ export class SessionEditPage implements OnInit {
   }
 
   onExit() {
-    this.router.navigateByUrl('/setup/tabs/(sessions:sessions)');
+    this.router.navigateByUrl('/setup/tabs/sessions');
   }
 
   isValidAll() {

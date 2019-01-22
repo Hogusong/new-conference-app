@@ -12,9 +12,9 @@
 </ion-header>
   
 <ion-content padding>
-  <ion-list *ngIf="speaker">
+  <ion-list *ngIf="speaker && !uploadImage">
     <div padding-top text-center
-        (click)="this.loadImage = (this.mode === 'New') ? false : true">
+        (click)="this.uploadImage = (this.mode === 'New') ? false : true">
       <img *ngIf="speaker.profilePic" [src]="speaker.profilePic" alt="avatar">
       <img *ngIf="!speaker.profilePic" src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
     </div>
@@ -52,4 +52,9 @@
     </ion-item>
   </ion-list>
 
+  <upload-image *ngIf="speaker && uploadImage"
+        [name]="speaker.name"
+        (updateImage)="updatePicture($event)"
+        (exit)="onExit()">
+  </upload-image>
 </ion-content>

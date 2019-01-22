@@ -18,6 +18,7 @@ export class SpeakerEditPage implements OnInit {
   speaker: SPEAKER;
   speakers: SPEAKER[];
   header = `Speaker's Info`;
+  uploadImage = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -88,6 +89,14 @@ export class SpeakerEditPage implements OnInit {
     return this.speakers.find(spk => spk.email.toLowerCase() === email.toLowerCase());
   }
 
+  updatePicture(path: string) {
+    const oldUrl = this.speaker.profilePic;
+    const id = this.speaker.id;
+    this.speaker.profilePic = path;
+    this.speakerService.updateSpeaker(this.speaker);
+    this.uploadImage = false;
+    this.router.navigateByUrl('/setup/tabs/set-speakers');
+  }
 
   onExit() {
     this.router.navigate(['setup/tabs/set-speakers']);
