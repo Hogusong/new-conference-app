@@ -8,7 +8,7 @@ const routes: Routes = [
       { path: 'sessions',
         children: [
           { path: '', loadChildren: '../sessions/sessions.module#SessionsPageModule' },
-          // { path: 'edit/:mode', loadChildren: '' }
+          { path: 'edit/:id', loadChildren: '../sessions/session-edit/session-edit.module#SessionEditPageModule' }
         ]
       },
       { path: 'set-speakers',
