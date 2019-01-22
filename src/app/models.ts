@@ -63,3 +63,16 @@ export interface SUPPORT {
   date: string;             // 2018-12-19
   support: string;
 }
+
+export interface SESSION {
+  id?: string;
+  name: string;
+  date: string;         // 2018-12-06
+  timeStart: string;    // 15:30 for 3:30pm
+  timeEnd?: string;
+  location?: string;
+  description?: string;
+  speakerIDs: string[];   // speaker's id
+  tracks: string[];     //  name of track
+  hide?: boolean;
+}
