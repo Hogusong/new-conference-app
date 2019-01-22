@@ -56,3 +56,10 @@ export interface MAP {
   lng: number;
   center?: boolean;
 }
+
+export interface SUPPORT {
+  id?: string;
+  userId: string;
+  date: string;             // 2018-12-19
+  support: string;
+}

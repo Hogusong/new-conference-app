@@ -59,4 +59,14 @@ export class FunctionService {
     }
     return date < 29;
   }
+
+  getDateFormat(date?: Date) {
+    if (!date) {
+      date = new Date();
+    }
+    const dateArray = date.toLocaleDateString().split('/');
+    return dateArray[2] + '-' +
+           this.get2DigitString(+dateArray[0]) + '-' +
+           this.get2DigitString(+dateArray[1]);
+  }
 }
