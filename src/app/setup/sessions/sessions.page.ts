@@ -6,6 +6,7 @@ import { SESSION } from 'src/app/models';
 import { SessionService } from 'src/app/providers/session.service';
 import { GeneralService } from 'src/app/providers/general.service';
 import { FunctionService } from 'src/app/providers/function.service';
+import { PeriodPage } from './period/period.page';
 
 @Component({
   selector: 'app-sessions',
@@ -50,7 +51,21 @@ export class SessionsPage implements OnInit {
   }
 
   async getDatePeriod() {
-    console.log('will get period');
+    const start = this.startDate ? this.startDate : this.funService.getDateFormat();
+    const end = this.endDate ? this.endDate : start ;
+    const modal = await this.modalCtrl.create({
+      component: PeriodPage,
+      componentProps: { start, end }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.startDate = data.start;
+      this.endDate = data.end;
+      this.genService.setPeriod({ start: this.startDate, end: this.endDate });
+      this.getSessions();
+    }
   }
 
   async onConfirmToRemove(session: SESSION) {

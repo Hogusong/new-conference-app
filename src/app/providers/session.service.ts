@@ -20,7 +20,7 @@ export class SessionService {
       'sessions', ref => ref.where('date', '>=', start)
                             .where('date', '<=', end)
                             .orderBy('date', 'asc'));
-    return this.sessionsCollection.snapshotChanges()
+    const sessions = this.sessionsCollection.snapshotChanges()
       .pipe(map(response => {
         return response.map(action => {
           const data = action.payload.doc.data() as SESSION;
@@ -28,6 +28,7 @@ export class SessionService {
           return data;
         });
       }));
+    return sessions;
   }
 
   getSessions(): Observable<SESSION[]> {
