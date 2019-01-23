@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 
-import { GeneralService } from 'src/app/providers/general.service';
+import { GeneralService } from '../../providers/general.service';
+import { FunctionService } from '../../providers/function.service';
+import { PeriodPage } from './period/period.page';
 
 @Component({
   selector: 'app-schedule',
@@ -15,7 +17,9 @@ export class SchedulePage implements OnInit{
   endDate: string;
 
   constructor(private loadingCtrl: LoadingController,
-              private genService: GeneralService) { }
+              private modalCtrl: ModalController,
+              private genService: GeneralService,
+              private funService: FunctionService) { }
 
   ngOnInit() {
     this.genService.isLoggedIn().then(res => {
@@ -59,10 +63,22 @@ export class SchedulePage implements OnInit{
     console.log('reset filter')
   }
 
-  getDatePeriod() {
-    console.log('get period of date')
-    this.startDate = '2019-01-01';
-    this.endDate = '2019-12-31';
+  async getDatePeriod() {
+    const start = this.startDate ? this.startDate : this.funService.getDateFormat();
+    const end = this.endDate ? this.endDate : start ;
+    const modal = await this.modalCtrl.create({
+      component: PeriodPage,
+      componentProps: { start, end }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.startDate = data.start;
+      this.endDate = data.end;
+      this.genService.setPeriod({ start: this.startDate, end: this.endDate });
+      this.updateSchedule();
+    }
   }
 
   async openSocial(network: string, fab: HTMLIonFabElement) {
