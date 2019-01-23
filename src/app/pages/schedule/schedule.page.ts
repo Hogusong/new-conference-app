@@ -7,6 +7,7 @@ import { PeriodPage } from './period/period.page';
 import { SessionService } from 'src/app/providers/session.service';
 import { PARTOFDAY, SESSION, USER } from 'src/app/models';
 import { ScheduleTrackPage } from './schedule-track/schedule-track';
+import { ScheduleFilterPage } from './schedule-filter/schedule-filter';
 
 @Component({
   selector: 'app-schedule',
@@ -167,8 +168,19 @@ export class SchedulePage implements OnInit{
     });
   }
 
-  resetFilter() {
-    console.log('reset filter')
+  async resetFilter() {
+    const modal = await this.modalCtrl.create({
+      component: ScheduleFilterPage,
+      componentProps: { excludedTracks: this.excludeTracks }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.excludeTracks = data;
+      this.segment = 'user';
+      this.updateFilter();
+    }
   }
 
   async getDatePeriod() {

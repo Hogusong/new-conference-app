@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { SchedulePage } from './schedule.page';
 import { PeriodPage } from './period/period.page';
 import { ScheduleTrackPage } from './schedule-track/schedule-track';
+import { ScheduleFilterPage } from './schedule-filter/schedule-filter';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SchedulePage, PeriodPage, ScheduleTrackPage],
-  entryComponents: [PeriodPage, ScheduleTrackPage]
+  declarations: [SchedulePage, PeriodPage, ScheduleTrackPage, ScheduleFilterPage],
+  entryComponents: [PeriodPage, ScheduleTrackPage, ScheduleFilterPage]
 })
 export class SchedulePageModule {}
