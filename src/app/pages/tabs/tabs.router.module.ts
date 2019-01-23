@@ -14,7 +14,8 @@ const routes: Routes = [
       },
       { path: 'speakers',
         children: [
-          { path: '', loadChildren: '../speakers/speakers.module#SpeakersPageModule' }
+          { path: '', loadChildren: '../speakers/speakers.module#SpeakersPageModule' },
+          { path: 'detail/:id', loadChildren: '../speakers/speaker-detail/speaker-detail.module#SpeakerDetailModule' }
         ]
       },
       { path: 'map',
