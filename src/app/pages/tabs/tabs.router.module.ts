@@ -8,7 +8,8 @@ const routes: Routes = [
     children: [
       { path: 'schedule',
         children: [
-          { path: '', loadChildren: '../schedule/schedule.module#SchedulePageModule' }
+          { path: '', loadChildren: '../schedule/schedule.module#SchedulePageModule' },
+          { path: 'session/:id', loadChildren: '../session-detail/session-detail.module#SessionDetailModule' }
         ]
       },
       { path: 'speakers',

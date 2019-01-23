@@ -8,6 +8,7 @@ import { SessionService } from 'src/app/providers/session.service';
 import { PARTOFDAY, SESSION, USER } from 'src/app/models';
 import { ScheduleTrackPage } from './schedule-track/schedule-track';
 import { ScheduleFilterPage } from './schedule-filter/schedule-filter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-schedule',
@@ -37,6 +38,7 @@ export class SchedulePage implements OnInit{
  
   constructor(private loadingCtrl: LoadingController,
               private modalCtrl: ModalController,
+              private router: Router,
               private genService: GeneralService,
               private sessionService: SessionService,
               private funService: FunctionService) { }
@@ -209,5 +211,9 @@ export class SchedulePage implements OnInit{
     await loading.present();
     await loading.onWillDismiss();
     fab.close();
+  }
+
+  navigate(id: string) {
+    this.router.navigate(['/tabs/schedule/session', id]);
   }
 }
