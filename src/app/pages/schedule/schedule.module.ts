@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SchedulePage } from './schedule.page';
 import { PeriodPage } from './period/period.page';
+import { ScheduleTrackPage } from './schedule-track/schedule-track';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SchedulePage, PeriodPage],
-  entryComponents: [PeriodPage]
+  declarations: [SchedulePage, PeriodPage, ScheduleTrackPage],
+  entryComponents: [PeriodPage, ScheduleTrackPage]
 })
 export class SchedulePageModule {}

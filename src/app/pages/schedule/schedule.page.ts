@@ -6,6 +6,7 @@ import { FunctionService } from '../../providers/function.service';
 import { PeriodPage } from './period/period.page';
 import { SessionService } from 'src/app/providers/session.service';
 import { PARTOFDAY, SESSION, USER } from 'src/app/models';
+import { ScheduleTrackPage } from './schedule-track/schedule-track';
 
 @Component({
   selector: 'app-schedule',
@@ -25,9 +26,10 @@ export class SchedulePage implements OnInit{
   schedule: {
     date: string,
     groups: {
-      indexKey: number
+      indexKey: number,
       partOfDay: string,
-      sessions: any[]
+      sessions: any[],
+      count?: number
     }[]
   }[] = [];
   user: USER;
@@ -91,6 +93,7 @@ export class SchedulePage implements OnInit{
         partOfDay: partOfDay.name,
         sessions: [session]
       };
+      newGroup['count'] = newGroup['sessions'].length
       const newItem = { date: session.date, groups: [newGroup]};
 
       const sIndex = this.schedule.findIndex(item => item.date === session.date);
@@ -126,23 +129,40 @@ export class SchedulePage implements OnInit{
     if (this.segment === 'one') {
       this.chooseTrack();
     } else if (this.segment === 'all') {
+      this.excludeTracks = [];
       this.updateFilter();
     } else if (this.segment === 'favorites') {
       this.updateFilter();
     }
   }
 
-  chooseTrack() {
-    console.log("choose a track")
+  async chooseTrack() {
+    const modal = await this.modalCtrl.create({
+      component: ScheduleTrackPage,
+      componentProps: { excludedTracks: this.excludeTracks }
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.excludeTracks = data;
+      this.segment = 'user';
+      this.updateFilter();
+    } else {
+      this.segment = '';
+    }
   }
 
   updateFilter() {
     const filterOption = this.getFilterOption();
     this.schedule.forEach(daily => {
       daily.groups.forEach(group => {
+        let count = 0
         group.sessions.forEach(session => {
           session = this.sessionService.filterSession(session, filterOption);
+          if (!session.hide) { count ++ }
         });
+        group.count = count
       });
     });
   }
