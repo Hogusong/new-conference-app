@@ -214,6 +214,6 @@ export class SchedulePage implements OnInit{
   }
 
   navigate(id: string) {
-    this.router.navigate(['/tabs/schedule/session', id]);
+    this.router.navigate(['/tabs/schedule/session', id, 'schedule']);
   }
 }

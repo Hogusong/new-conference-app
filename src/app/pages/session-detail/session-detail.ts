@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SESSION, USER } from 'src/app/models';
 import { SessionService } from 'src/app/providers/session.service';
@@ -15,14 +15,17 @@ export class SessionDetailPage {
   session: SESSION;
   user: USER;
   isFavorite = false;
+  parent: string;
 
   constructor(private sessionService: SessionService,
               private genService: GeneralService,
               private userService: UserService,
-              private activateRoute: ActivatedRoute) {}
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {}
 
   ionViewWillEnter() {
-    const id = this.activateRoute.snapshot.paramMap.get('id');
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.parent = this.activatedRoute.snapshot.paramMap.get('parent');
     this.sessionService.getSessionById(id)
       .then( data => {
         data.id = id;
@@ -49,5 +52,9 @@ export class SessionDetailPage {
     this.userService.updateUser(this.user);
     this.genService.setUser(this.user);
     this.isFavorite = !this.isFavorite;
+  }
+
+  navigateBack() {
+    this.router.navigate([`/tabs/${this.parent}`]);
   }
 }

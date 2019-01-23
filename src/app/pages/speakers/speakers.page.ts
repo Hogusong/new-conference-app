@@ -31,6 +31,10 @@ export class SpeakersPage {
     this.router.navigate(['tabs/speakers/detail', id]);
   }
 
+  goToSessionDetail(id) {
+    this.router.navigate(['tabs/speakers/session', id, 'speakers']);
+  }
+
   goToSpeakerTwitter(speaker: SPEAKER) {
     this.inAppBrowser.create(
       `https://twitter.com/${speaker.twitter}`, '_blank'
