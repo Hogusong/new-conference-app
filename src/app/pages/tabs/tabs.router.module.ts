@@ -8,12 +8,15 @@ const routes: Routes = [
     children: [
       { path: 'schedule',
         children: [
-          { path: '', loadChildren: '../schedule/schedule.module#SchedulePageModule' }
+          { path: '', loadChildren: '../schedule/schedule.module#SchedulePageModule' },
+          { path: 'session/:id/:parent', loadChildren: '../session-detail/session-detail.module#SessionDetailModule' }
         ]
       },
       { path: 'speakers',
         children: [
-          { path: '', loadChildren: '../speakers/speakers.module#SpeakersPageModule' }
+          { path: '', loadChildren: '../speakers/speakers.module#SpeakersPageModule' },
+          { path: 'detail/:id', loadChildren: '../speakers/speaker-detail/speaker-detail.module#SpeakerDetailModule' },
+          { path: 'session/:id/:parent', loadChildren: '../session-detail/session-detail.module#SessionDetailModule' }
         ]
       },
       { path: 'map',

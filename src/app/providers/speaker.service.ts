@@ -4,7 +4,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SPEAKER } from '../models';
+import { SPEAKER, SESSION } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +65,24 @@ export class SpeakerService {
     delete(speaker.id);
     this.speakerDoc.update(speaker);
     speaker.id = id;
+  }
+
+  addSessionInSpeaker(id: string, session: SESSION) {
+    this.getSpeakerByID(id).then(speaker => {
+      speaker.sessions.push({ id: session.id, name: session.name });
+      speaker.id = id;
+      this.updateSpeaker(speaker);
+    })
+  }
+
+  removeSessionFromSpeaker(id: string, session: SESSION) {
+    this.getSpeakerByID(id).then(speaker => {
+      const idx = speaker.sessions.findIndex(s => s.id === session.id);
+      speaker.id = id;
+      if (idx > -1) {
+        speaker.sessions.splice(idx, 1);
+        this.updateSpeaker(speaker);
+      }
+    })
   }
 }

@@ -4,6 +4,7 @@ import { SPEAKER } from 'src/app/models';
 import { SpeakerService } from 'src/app/providers/speaker.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-speakers',
@@ -17,12 +18,21 @@ export class SpeakersPage {
 
   constructor(private speakerService: SpeakerService,
               private inAppBrowser: InAppBrowser,
-              private actionSheetCtrl: ActionSheetController) { }
+              private actionSheetCtrl: ActionSheetController,
+              private router: Router) { }
 
   ionViewDidEnter() {
     this.speakerService.getSpeakers().subscribe(res => {
       this.speakers = res;
     })
+  }
+
+  navigate(id) {
+    this.router.navigate(['tabs/speakers/detail', id]);
+  }
+
+  goToSessionDetail(id) {
+    this.router.navigate(['tabs/speakers/session', id, 'speakers']);
   }
 
   goToSpeakerTwitter(speaker: SPEAKER) {

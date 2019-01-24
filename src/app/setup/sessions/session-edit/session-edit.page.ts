@@ -25,7 +25,7 @@ export class SessionEditPage implements OnInit {
   tracks: TRACK[];
   speakers: SPEAKER[];
   s_tracks: { name: string, isChecked: boolean }[] = [];
-  moreSpeakers = false;
+  oldSpeakerIDs = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private cdRef: ChangeDetectorRef,
@@ -57,6 +57,7 @@ export class SessionEditPage implements OnInit {
       this.sessionService.getSessionById(this.id).then(data => {
         this.session = data;
         this.session.id = this.id;
+        this.oldSpeakerIDs = this.session.speakerIDs.slice();
         this.minYear = '' + (+data.date.slice(0, 4) - 5);
         this.maxYear = '' + (+this.minYear + 15);
       });
@@ -144,7 +145,15 @@ export class SessionEditPage implements OnInit {
         this.sessionService.addNewSession(this.session);
       } else {
         this.sessionService.updateSession(this.session);
+        this.oldSpeakerIDs.forEach(id => {
+          this.speakerService.removeSessionFromSpeaker(id, this.session);
+        });
       }
+      setTimeout(() => {
+        this.session.speakerIDs.forEach(id => {
+          this.speakerService.addSessionInSpeaker(id, this.session);
+        });  
+      }, 300);
       this.onExit();
     }
   }
