@@ -29,6 +29,14 @@ _Note: See [How to Prevent Permissions Errors](https://docs.npmjs.com/getting-st
 
 All app preview screenshots were taken by running `ionic serve --lab` on a retina display.
 
+- Conference App Flow
+
+  <img src="ConferenceAppFlows/ConApp Flow.png" alt="App Flow">
+
+- Admin Setup Flow
+
+  <img src="ConferenceAppFlows/Admin Flow.png" alt="Setup Flow">
+
 - [Schedule Page](https://github.com/Hogusong/new-conference-app/blob/master/src/app/pages/schedule/schedule.page.html)
 
   <img src="resources/screenshots/Schedule - main.png" alt="Schedule">
@@ -39,7 +47,7 @@ All app preview screenshots were taken by running `ionic serve --lab` on a retin
   <img src="resources/screenshots/Speakers - main.png" alt="Speakers">
 
 
-- To see more images of the app, check out the [screenshots directory](https://github.com/Hogusong/new-conference-app/tree/master/resources/screenshots)!
+- To see more images of the app, check out the [screenshots directory](https://github.com/Hogusong/new-conference-app/tree/master/ConferenceAppFlows/screenshots)!
 
 
 ## Deploying
